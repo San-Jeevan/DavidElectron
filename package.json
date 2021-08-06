@@ -1,0 +1,23 @@
+{
+  "name": "aibot",
+  "version": "1.0.0",
+  "description": "En robot for å lære norsk",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Robot"
+  ],
+  "author": "Jeevan Sivagnanasuntharam",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^13.1.8",
+    "electron-builder": "^22.11.7"
+  },
+  "dependencies": {
+    "xterm": "^4.13.0",
+    "xterm-addon-fit": "^0.5.0"
+  }
+}
