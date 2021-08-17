@@ -27,6 +27,21 @@ term.writeln("3")
 term.writeln("\n")
 
 
+question1 = input ("")
+answer1 = ("2")
+term.writeln("\n")
+
+if (question1 == answer1) {
+term.writeln("Correct!")
+    score = score + 1
+}
+else{
+term.writeln("Incorrect!")
+term.writeln("Score: " + str(score)) 
+term.writeln("\n")
+term.writeln("\n")
+}
+
 // ------------------------SLUTT---------------
 
 
