@@ -22,7 +22,7 @@ fitAddon.fit();
 
 
 
-var familie = ["familie", "foreldre", "mor", "far", "bror", "søster", "søsken", "besteforeldre", "bestefar", "bestemor", "mormor", "morfar",
+var familie = ["familie", "asdasd", "foreldre", "mor", "far", "bror", "søster", "søsken", "besteforeldre", "bestefar", "bestemor", "mormor", "morfar",
                  
 "brødre", "søstre",
 
