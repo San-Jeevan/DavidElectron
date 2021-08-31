@@ -6,13 +6,13 @@
 // process.
 
 
-var term = new Terminal();
+var term = new Terminal({ fontSize: 30, fontFamily: 'Courier New' });
 var fitAddon = new FitAddon.FitAddon();
 
 
 term.loadAddon(fitAddon);
 term.open(document.getElementById('terminal'));
-term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+
 fitAddon.fit();
 
 // -------------------------START---------------------
@@ -26,21 +26,25 @@ term.writeln("2")
 term.writeln("3")
 term.writeln("\n")
 
-
-question1 = input ("")
+question1 = "";
 answer1 = ("2")
 term.writeln("\n")
 
 if (question1 == answer1) {
-term.writeln("Correct!")
+    term.writeln("Correct!")
     score = score + 1
 }
-else{
-term.writeln("Incorrect!")
-term.writeln("Score: " + str(score)) 
-term.writeln("\n")
-term.writeln("\n")
+else {
+    term.writeln("Incorrect!")
+    //term.writeln("Score: " + str(score))
+    term.writeln("\n")
+    term.writeln("\n")
 }
+
+
+term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+term.writeln("\u001b[36mPretty good!\033[0m")
+
 
 // ------------------------SLUTT---------------
 
