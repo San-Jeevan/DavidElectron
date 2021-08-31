@@ -3,10 +3,12 @@ questions[0] = []; //module0
 questions[1] = []; //module1
 questions[2] = []; //osvs...
 
+
+// MODUL 1
 var q1 = {};
 q1.stage = 0;
-q1.question = 'hva er 1+1?';
-q1.questionHelpText = "1,2 eller 3";
+q1.question = 'hva er 1+1?'; //det er lov å bruke fargekoder her som: \u001b[36mI blabla \033[0m
+q1.questionHelpText = "1,2 eller 3"; //det er lov å bruke fargekoder her som: \u001b[36mI blabla \033[0m
 q1.answer = "2";
 q1.score = 1;
 questions[0].push(q1);
@@ -24,6 +26,8 @@ questions[0].push(q2);
 
 
 
+
+// MODUL 2
 var q3 = {};
 q3.stage = 2;
 q3.question = "Jostein sover i sofaen  - Jostein is sleeping in the car";
