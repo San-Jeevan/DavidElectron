@@ -17,17 +17,30 @@ window.addEventListener('resize', function (event) {
 //vi disabler pil opp og ned tastene
 term.attachCustomKeyEventHandler(function (e) {
     if (e.code == "ArrowUp" || e.code == "ArrowDown") {
-      return false;
+      //return false;
     }
-  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //bruker innstillinger
 var score = 0;
-var currentStage = 0;
+var currentStage = 0; //dette kan du se på som spørsmål 0
 var currentModule = 0;
+var maxFailedAttempts = 1000;
 var failedAttempts = 0;
-var maxFailedAttempts = 2;
 var currentAnswer = "";
 var gameisOver = false;
 
@@ -51,24 +64,24 @@ function resetGame() {
 
 
 function showFinalScore() {
-    term.writeln('-----SPILLET ER SLUTT----');
+    term.writeln('-----MODULEN ER SLUTT----');
     term.writeln('DU FIKK:');
-    term.writeln(`${score} poeng`);
+    var percentage = ((score / questions[0].length) ) * 100;
+    term.writeln(`${score} / ${questions[0].length} (${percentage}%) poeng`);
     if(score < 3){
         term.writeln("\u001b[36mI know this was your first quiz, but I suggest you try again.\033[0m")
     }
     else {
         term.writeln("Well done, lets go to the next stage?");
-       
-        //koden nedenfor går til modul2 av spillet
-        // currentModule++;
-        // resetGame();
-        // print_lines(5);
-        // term.writeln(questions[currentModule][currentStage].question);
-        // if(questions[currentModule][currentStage].questionHelpText !== ""){
-        //     term.writeln(`(Hjelp: ${questions[currentModule][currentStage].questionHelpText})`);         
-        // }
     }
+    term.writeln("Press enter to continue....");
+        currentModule++;
+        resetGame();
+        print_lines(5);
+        term.writeln(questions[currentModule][currentStage].question);
+        if(questions[currentModule][currentStage].questionHelpText !== ""){
+            term.writeln(`(Hjelp: ${questions[currentModule][currentStage].questionHelpText})`);         
+        }
 }
 
 function print_lines(lines){
@@ -77,40 +90,65 @@ function print_lines(lines){
       } 
 }
 
+function isTheAnswerCorrect(userinput, questionAnswer) {
+    if (questionAnswer.indexOf(";") != -1) {
+        //its has multi-answers
+        var listOfAnswers = questionAnswer.split(';');
+        for (let i = 0; i < listOfAnswers.length; i++) {
+            if(listOfAnswers[i].toLowerCase() == userinput.toLowerCase()) return true;
+          } 
+    }
+    else {
+        return userinput.toLowerCase() == questionAnswer.toLowerCase();
+    }
+    return false;
+}
+
 
 
 // -------------------------GAMELOOP---------------------
 function gameLoop(userinput) {
     var _currentQuestion = questions[currentModule][currentStage];
-    if (userinput.toLowerCase() == _currentQuestion.answer.toLowerCase()) {
+    
+    if (isTheAnswerCorrect(userinput, _currentQuestion.answer)) {
         score = score + _currentQuestion.score;
         term.writeln('RIKTIG!!!!!!');
         term.write('\n');
-        if(isTheGameOver(currentStage)){
-            gameisOver = true;
-            showFinalScore();
-            return;
-        }
-        currentStage++;
-        var _nextQuestion = questions[currentModule][currentStage];
-        term.writeln(_nextQuestion.question);
-        if(_nextQuestion.questionHelpText !== ""){
-            term.writeln(`(Hjelp: ${_nextQuestion.questionHelpText})`);         
-        }
     }
     else {
-        term.writeln('\x1B[1;3;31mFeil!\x1B[0m');
-        failedAttempts++;
-        if((maxFailedAttempts-failedAttempts) == 0)
-        {
-            term.writeln(`-----GAME OVER-----`);
-            gameisOver = true;
-            return;
-        }
-        term.writeln(`Du har svart feil ${failedAttempts} ganger, og har ${maxFailedAttempts-failedAttempts} forsøk igjen`);
-        term.writeln(_currentQuestion.question);
+        term.writeln(`\x1B[1;3;31mDu har svart feil!\x1B[0m Korrekt svar: ${_currentQuestion.answer}`);
+        print_lines(4);
+    }
+
+    if(isTheGameOver(currentStage)){
+        gameisOver = true;
+        showFinalScore();
+        return;
+    }
+    currentStage++;
+    var _nextQuestion = questions[currentModule][currentStage];
+    term.writeln(_nextQuestion.question);
+    if(_nextQuestion.questionHelpText !== ""){
+        term.writeln(`(Hjelp: ${_nextQuestion.questionHelpText})`);         
     }
 }
+
+//     //logikk når svaret er feil
+//     else {
+//         term.writeln(`\x1B[1;3;31mDu har svart feil!\x1B[0m Korrekt svar: ${_currentQuestion.answer}}`);
+        
+
+//         failedAttempts++;
+//         if((maxFailedAttempts-failedAttempts) == 0)
+//         {
+//             term.writeln(`-----GAME OVER-----`);
+//             gameisOver = true;
+//             return;
+//         }
+//         //term.writeln(`Du har svart feil ${failedAttempts} ganger, og har ${maxFailedAttempts-failedAttempts} forsøk igjen`);
+//         //term.writeln(_currentQuestion.question);
+//     }
+// }
 // -------------------------GAMELOOP---------------------
 
 
